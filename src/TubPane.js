@@ -6,12 +6,7 @@ import InfiniteScroll from 'react-infinite-scroll-component';
 import fileDownload from 'react-file-download'
 import {
 	Button,
-	Checkbox,
 	Form,
-	Grid,
-	Input,
-	Radio,
-	Select,
 	Card,
 	Header,
 	Divider
@@ -21,7 +16,8 @@ class TubPane extends Component {
 	handleDownload = () => {
 		var ids = [];
 		this.props.saved.map((item) => ids.push(item._id))
-		axios.post('http://ec2-52-39-12-223.us-west-2.compute.amazonaws.com/api/save',
+		axios.post('https://cors-anywhere.herokuapp.com/http://home.arvindbalaji.com/api/save',
+		// axios.post('http://192.168.1.163:8080/api/save',
 		{
 			ids: ids,
 		},
@@ -57,7 +53,7 @@ class TubPane extends Component {
 			<Card.Group style={{padding:'5px', paddingLeft:'1px'}}>
 				{
 					this.props.saved.map((item) =>
-						<CardView data={item}simple/>
+						<CardView removeCard={this.props.removeCard} data={item}simple/>
 					)
 				}
 			</Card.Group>
@@ -67,7 +63,8 @@ class TubPane extends Component {
 			<Form>
 				<Form.Group >
 					{/*<Form.Field control={Button} width={8} onClick={() => this.handleDownload()}>Download</Form.Field>*/}
-					<Form.Field control={Button} width={8} onClick={() => this.handleDownload()}>Download</Form.Field>
+					<Form.Field primary control={Button}  onClick={() => this.handleDownload()}>Download</Form.Field>
+					<Form.Field control={Button}   onClick={() => this.props.removeAll()}>Clear</Form.Field>
 				</Form.Group>
 			</Form>
 		</div>);

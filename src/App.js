@@ -40,28 +40,41 @@ class App extends Component {
 			saved: [...this.state.saved, data]
 		});
 	}
+	removeCard = (data) => {
+		var array = [...this.state.saved]
+		var index = array.indexOf(data)
+		array.splice(index, 1);
+		this.setState({
+			saved: array
+		});
+	}
+	removeAll = () => {
+		this.setState({
+			saved: []
+		});
+	}
 	handleChange = ({target}) => {
 		this.setState({
 			[target.name]: target.value
 		});
 	}
 	render() {
-		return (<Container style={{
-				marginTop: '2em',
-			}}>
-			<Header as='h1'>CardDB</Header>
+		return ([
+		<Container style={{marginTop: '2em'}}>
+			<Header as='h1'>CardDB</Header> 
 			<br/>
 			<Grid columns={2} >
 				<Grid.Column>
-					<SearchPane height={this.state.height} setData={this.setData} saveCard={this.saveCard} data={this.state.data} saved={this.state.saved}/>
+					<SearchPane height={this.state.height+30} setData={this.setData} saveCard={this.saveCard} data={this.state.data} saved={this.state.saved}/>
 				</Grid.Column>
 
 				<Grid.Column>
-					<TubPane height={this.state.height} setData={this.setData} saveCard={this.saveCard} data={this.state.data} saved={this.state.saved}/>
+					<TubPane height={this.state.height-15} setData={this.setData} removeAll={this.removeAll}removeCard={this.removeCard} saveCard={this.saveCard} data={this.state.data} saved={this.state.saved}/>
 				</Grid.Column>
-
 			</Grid>
-		</Container>);
+		</Container>,
+		<div style={{position: 'absolute', bottom: '10px', textAlign: 'center',width: '100%', color:'#525252'}}> CardDB | Arvind Balaji | 2018 </div>
+		]);
 	}
 }
 

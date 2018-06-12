@@ -1,3 +1,20 @@
+@import '~antd/dist/antd.css';
+
+.card-cite {
+  font-size: 15px;
+}
+.search-dropdown {
+  /* text-align: center; */
+  margin-top: -10px;
+}
+.underline {
+  text-decoration: underline;
+}
+/* .container.app-container {
+  width: inherit !important;
+  margin-left: 5em !important;
+  margin-right: 5em !important;
+} */
 /* .App {
   text-align: center;
 }
