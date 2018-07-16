@@ -1,4 +1,3 @@
-@import '~antd/dist/antd.css';
 
 .card-cite {
   font-size: 15px;
@@ -9,6 +8,13 @@
 }
 .underline {
   text-decoration: underline;
+}
+.logo-card {
+  font-weight: 200;
+  color:#2185d0;
+}
+.ui.card, .ui.cards>.card{
+  flex-direction: unset;
 }
 /* .container.app-container {
   width: inherit !important;

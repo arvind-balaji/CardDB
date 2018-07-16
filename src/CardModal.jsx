@@ -15,7 +15,7 @@ class CardModal extends Component {
 	getData = () => {
 		this.setState({searching: true});
 		console.log(this.state.searchStr)
-		axios.get('https://cors-anywhere.herokuapp.com/http://home.arvindbalaji.com/api/card/' + this.props.id).then(res => {
+		axios.get('http://home.arvindbalaji.com/api/card/' + this.props.id).then(res => {
 		// axios.get('http://192.168.1.163:8080/api/card/' + this.props.id).then(res => {
 			this.setState({data: res.data.data, searching: false});
 			// this.props.setData(res.data.data)

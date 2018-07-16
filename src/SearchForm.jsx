@@ -59,6 +59,8 @@ class SearchForm extends Component {
 			{ key: 'Open Ev 2016', value: 'Open Ev 2016', text: 'OpenEv \'16' },
 			{ key: 'Open Ev 2015', value: 'Open Ev 2015', text: 'OpenEv \'15' },
 			{ key: 'Open Ev 2014', value: 'Open Ev 2014', text: 'OpenEv \'14' },
+			{ key: '2018 Files', value: '2018 Files', text: '2018 Files'}, 
+			{ key: 'User Contributed', value: 'User Contributed', text: 'User Contributed' },
 		]
 		const feildOpt = [ 
 			{ key: 'tag', value: 'tag', text: 'Tag' }, 
@@ -70,7 +72,7 @@ class SearchForm extends Component {
 			<div>
 				<Form>
 					<Form.Group>
-						<Form.Field control={Input}  width={12} onChange={this.handleChange} name="search" placeholder='Search for a cite of tag...'/>
+						<Form.Field control={Input}  width={12} onChange={this.handleChange} name="search" placeholder='Search for a cite or tag...'/>
 						<Form.Field primary loading={this.props.searching} onClick={this.handleSubmit} disabled={this.props.searching} control={Button} width={4}>Search</Form.Field>
 					</Form.Group>
 					<Accordion  className="search-dropdown">

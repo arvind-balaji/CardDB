@@ -26,50 +26,46 @@ class SearchPane extends Component {
 			searching: false
 		};
 	}
-	handleSearch = (str) => {
+
+	handleSearch = str => {
 		this.setState({searching: true});
-		console.log(this.state.searchStr)
-		axios.get('https://cors-anywhere.herokuapp.com/http://home.arvindbalaji.com/api/search?'+str).then(res => {
-		// axios.get('http://192.168.1.163:8080/api/search?'+str).then(res => {
-			this.setState({data: res.data.data, searching: false});
-			// this.props.setData(res.data.data)
-			console.log(res.data);
+		// axios.get('http://192.168.1.163/api/search?'+str)
+		axios.get('http://home.arvindbalaji.com/api/search?'+str)
+		.then(res => {
+			if('error' in res.data){
+				this.setState({searching: false});
+			}else{
+				this.setState({data: res.data.data, searching: false});
+			}
+		}).catch(err => {
+			this.setState({searching: false});
 		});
 	}
-	handleChange = ({target}) => {
-		this.setState({
-			[target.name]: target.value
-		});
-	}
-	// componentDidMount = () => {
-	// 	this.handleSearch();
-	// }
+	 saveCard = card => {
+		this.props.setSaved([...this.props.saved, card]) 
+	 }
 	render() {
-		return (<div className="SearchPane">
-			<Header as='h3' dividing>Search</Header>
-			{/* <Form>
-				<Form.Group >
-					<Form.Field control={Input} width={12} name="searchStr" onChange={this.handleChange} placeholder='Search for a cite of tag...'/>
-					<Form.Field loading={this.state.searching} disabled={this.state.searching} control={Button} width={4} onClick={this.handleSearch}>Search</Form.Field>
-				</Form.Group>
-			</Form> */}
-			<InfiniteScroll
-				hasMore={false}
-				height={this.props.height - 200}
-				style={{overflowX:'hidden'}}
-			>
-						<SearchForm handleChange={this.handleChange} searching={this.state.searching} handleSearch={this.handleSearch}/>
-
-				<Card.Group style={{padding:'5px', paddingLeft:'1px'}}>
-					{
-						this.state.data.map((item) =>
-							<CardView data={item} saveCard={this.props.saveCard}/>
-						)
-					}
-				</Card.Group>
-			</InfiniteScroll>
-
-		</div>);
+		return (
+			<div className="SearchPane">
+				<Header as='h3' dividing>Search</Header>
+				<InfiniteScroll
+					hasMore={false}
+					height={this.props.height - 200}
+					style={{overflowX:'hidden'}}
+				>
+					<div>
+					<SearchForm handleChange={this.handleChange} searching={this.state.searching} handleSearch={this.handleSearch}/>
+					<Card.Group style={{padding:'5px', paddingLeft:'1px'}}>
+						{
+							this.state.data.map((item, index) =>
+								<CardView id={index} data={item} saveCard={this.saveCard}/>
+							)
+						}
+					</Card.Group>
+					</div>
+				</InfiniteScroll>	
+			</div>
+		);
 	}
 }
 
