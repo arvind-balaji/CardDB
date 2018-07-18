@@ -55,11 +55,13 @@ class SearchForm extends Component {
 	render () {
 		const { expanded } = this.state
 		const setOpt = [ 
+			{ key: '2018 Files', value: '2018 Files', text: '2018 Files'}, 
 			{ key: 'Open Ev 2017', value: 'Open Ev 2017', text: 'OpenEv \'17' }, 
 			{ key: 'Open Ev 2016', value: 'Open Ev 2016', text: 'OpenEv \'16' },
 			{ key: 'Open Ev 2015', value: 'Open Ev 2015', text: 'OpenEv \'15' },
 			{ key: 'Open Ev 2014', value: 'Open Ev 2014', text: 'OpenEv \'14' },
-			{ key: '2018 Files', value: '2018 Files', text: '2018 Files'}, 
+			{ key: 'Open Ev 2013', value: 'Open Ev 2013', text: 'OpenEv \'13' },
+			{ key: 'Open Ev 2012', value: 'Open Ev 2012', text: 'OpenEv \'12' },
 			{ key: 'User Contributed', value: 'User Contributed', text: 'User Contributed' },
 		]
 		const feildOpt = [ 

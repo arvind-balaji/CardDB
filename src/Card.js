@@ -8,11 +8,13 @@ const CardView = (props) => {
 	// const meta = props.data.meta ? Object.values(props.data.meta).join(" > ") : "";
 	// const meta = props.data._id;
 	const meta = 
+		// console.log(['set','fileName','pocket','hat','block']
+		// .map(key => props.data[key]))
 		['set','fileName','pocket','hat','block']
 		.map(key => props.data[key])
-		.filter(String)
+		.filter(Boolean)		
 		.join(' > ')
-
+	console.log(meta)
 	return(
 	<Card onClick={()=>{}} fluid className="card">
 	<CardModal id={props.data._id}>
