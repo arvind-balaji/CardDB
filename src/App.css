@@ -13,8 +13,18 @@
   font-weight: 200;
   color:#2185d0;
 }
-.ui.card, .ui.cards>.card{
-  flex-direction: unset;
+.card-view{
+  flex-direction: unset!important;
+}
+.card-view>.extra {
+  display: flex;
+  flex-direction: column!important;
+  justify-content: center!important;
+  align-content: space-between!important;
+  flex-direction: column!important;
+}
+.tubpane-header {
+  /* margin-top: -32px!important; */
 }
 /* .container.app-container {
   width: inherit !important;

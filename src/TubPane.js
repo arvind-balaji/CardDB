@@ -3,6 +3,7 @@ import './App.css';
 import CardView from './Card.js'
 import axios from 'axios';
 import InfiniteScroll from 'react-infinite-scroll-component';
+import Categorizer from './Categorizer';
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 import fileDownload from 'react-file-download'
 import {
@@ -58,7 +59,10 @@ class TubPane extends Component {
 		const {height, saved} = this.props;
 		return (
 			<div className="SearchPane">
-				<Header as='h3' contentEditable={true} dividing>Saved</Header>
+				<Header className="tubpane-header" as='h3' dividing>
+					Saved
+					{/* <Categorizer/> */}
+				</Header>
 				<InfiniteScroll
 					hasMore={false}
 					height={height - 220}

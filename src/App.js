@@ -8,6 +8,8 @@ import {
 	Container,
 	Grid,
 	Header,
+	Button,
+	Icon
 } from 'semantic-ui-react'
 
 class App extends Component {
@@ -51,7 +53,8 @@ class App extends Component {
 					</span>
 					<span className="logo-vault">
 						Cards
-					</span>	
+					</span>
+					
 				</Header> 
 				<br/>
 				<Grid columns={2} >
@@ -71,6 +74,10 @@ class App extends Component {
 					</Grid.Column>
 				</Grid>
 			</Container>,
+			<Button href="https://github.com/arvind-balaji/debate-cards" style={{position:'absolute',top:'10px',right:'10px'}} color='black'>
+			 <Icon name='github' /> 
+			 Source
+			</Button>,
 			<div style={{position: 'absolute', bottom: '10px', textAlign: 'center',width: '100%', color:'#525252'}}> The Card Database | Arvind Balaji | 2018 </div>
 		]);
 	}
