@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Switch, Route, Link } from "react-router-dom";
+import { Route } from "react-router-dom";
 import './styles/App.css';
 import SearchPane from './components/SearchPane';
 import TubPane from './components/TubPane';

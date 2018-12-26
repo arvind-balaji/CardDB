@@ -26,9 +26,9 @@ class CardModal extends Component {
 					</Modal.Description>
 				</Modal.Content>
 				<Modal.Actions>
-      				<Button primary onClick={()=>this.props.history.goBack()}>
-        				Done 
-      				</Button>
+      		<Button primary onClick={()=>this.props.history.goBack()}>
+        			Done 
+      			</Button>
     			</Modal.Actions>
   			</Modal>
 		)

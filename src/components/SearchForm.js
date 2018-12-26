@@ -15,6 +15,9 @@ import {
 	Header,
 	Divider
 } from 'semantic-ui-react'
+import queryString  from 'query-string';
+import { withRouter } from "react-router";
+
 import AppContainer from '../containers/AppContainer';
 import subscribe from 'unstated-subscribe-hoc'
 
@@ -30,6 +33,25 @@ class SearchForm extends Component {
 		};
 	}
 	
+	componentDidMount = () => {
+		const search = this.props.history.location.search
+		if(search){
+			const query = queryString.parse(search)
+			console.log(query)
+			this.props.appStore.search(query);
+			console.log({
+				search:query.q,
+				field:query.f ? query.f.split(",") : [],
+				set:query.s ? query.s.split(",")  : []
+			})
+			this.setState({
+				search:query.q,
+				field:query.f ? query.f.split(",") : [],
+				set:query.s ? query.s.split(",")  : []
+			})
+		}
+	}
+
 	handleChange = (event, target) => {
 		this.setState({
 			[target.name]: target.value
@@ -44,6 +66,11 @@ class SearchForm extends Component {
 			s: set.join(','),
 			f: field.join(','),
 		}
+		const qs = queryString.stringify(params,{sort:false}).replace(/\%20/g, '+')
+		this.props.history.push({
+			pathname: '/search',
+			search: `?${qs}`
+		})
 		this.props.appStore.search(params)
 	}
 	serialize = function(obj) {
@@ -53,7 +80,8 @@ class SearchForm extends Component {
 			str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
 		  }
 		return str.join("&");
-	  }
+	}
+
 	render () {
 		const { expanded } = this.state
 		const { isSearchLoading } = this.props.appStore.state
@@ -77,7 +105,7 @@ class SearchForm extends Component {
 			<div>
 				<Form>
 					<Form.Group>
-						<Form.Field control={Input}  width={12} onChange={this.handleChange} name="search" placeholder='Search for a cite or tag...'/>
+						<Form.Field control={Input}  width={12} onChange={this.handleChange} value={this.state.search} name="search" placeholder='Search for a cite or tag...'/>
 						<Form.Field primary loading={isSearchLoading} onClick={this.handleSubmit} disabled={isSearchLoading} control={Button} width={4}>Search</Form.Field>
 					</Form.Group>
 					<Accordion  className="search-dropdown">
@@ -91,7 +119,7 @@ class SearchForm extends Component {
 						<Accordion.Content active={expanded}>
 						{/* <Card fluid> */}
 							<Form.Group >
-								<Form.Dropdown width={8} name="set" onChange={this.handleChange} placeholder='Evidence Set' fluid  selection multiple  options={setOpt} />
+								<Form.Dropdown width={8} name="set" value={this.state.set} onChange={this.handleChange} placeholder='Evidence Set' fluid  selection multiple  options={setOpt} />
 								<Form.Dropdown disabled width={8} name="field" onChange={this.handleChange} placeholder='Search Fields (Coming soon!)' fluid  selection multiple  options={feildOpt} />
 							</Form.Group>
 						{/* </Card> */}
@@ -103,4 +131,4 @@ class SearchForm extends Component {
 	}
 }
 
-export default subscribe(SearchForm, { appStore: AppContainer });
+export default subscribe(withRouter(SearchForm), { appStore: AppContainer });

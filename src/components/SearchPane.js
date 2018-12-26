@@ -4,6 +4,7 @@ import SearchForm from './SearchForm'
 import AppContainer from '../containers/AppContainer';
 import subscribe from 'unstated-subscribe-hoc'
 import InfiniteScroll from 'react-infinite-scroll-component';
+import { Route } from "react-router-dom";
 import {
 	Button,
 	Checkbox,
@@ -18,19 +19,24 @@ import {
 } from 'semantic-ui-react'
 
 class SearchPane extends Component {
-	constructor() {
-		super();
-		this.state = {
-			data: [],
-			searchStr: "food",
-			searching: false
-		};
-	}
+	// constructor() {
+	// 	super();
+	// }
 
 	saveCard = card => {
 		this.props.setSaved([...this.props.saved, card]) 
 	}
 
+	searchResults = (data) => (
+		<Card.Group style={{padding:'5px', paddingLeft:'1px'}}>
+			{
+				data.map((item, index) =>
+					<CardView key={item._id} data={item}/>
+				)
+			}
+		</Card.Group>
+	)
+	
 	render() {
 		const {search} = this.props.appStore.state;
 		// const {handleChange, handleSearch} = this.state
@@ -44,13 +50,7 @@ class SearchPane extends Component {
 				>
 					<div>
 					<SearchForm />
-					<Card.Group style={{padding:'5px', paddingLeft:'1px'}}>
-						{
-							search.map((item, index) =>
-								<CardView key={item._id} data={item}/>
-							)
-						}
-					</Card.Group>
+          	<Route path="/search" component={() => this.searchResults(search)} />
 					</div>
 				</InfiniteScroll>	
 			</div>

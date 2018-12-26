@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import {withRouter} from 'react-router-dom';
 import {Divider, Card, Button, Icon} from 'semantic-ui-react';
 import AppContainer from '../containers/AppContainer';
 import subscribe from 'unstated-subscribe-hoc'
@@ -18,15 +19,6 @@ class CardView  extends Component{
 		};
 	}
 
-	// getData = () => {
-	// 	this.setState({searching: true});
-	// 	console.log(this.state.searchStr)
-	// 	// axios.get('http://api.debate.cards/api/card/' + this.props.data._id).then(res => {
-	// 	axios.get('http://192.168.1.163:8080/api/card/' + this.props.id).then(res => {
-	// 		this.setState({modalData: res.data.data});
-	// 	});
-	// }
-
 	openModal = () => {
 		this.setState({modalOpen:true})
 		this.getData()
@@ -35,7 +27,7 @@ class CardView  extends Component{
 	
 	render() {
 		const {removeCard, saveCard, showCardModal} = this.props.appStore;
-		const {data} = this.props
+		const {data, history} = this.props
 		// generate doc hierarchy
 		const meta = 
 		['set','fileName','pocket','hat','block']
@@ -58,7 +50,7 @@ class CardView  extends Component{
 							<Button style={{"margin": "5px 0 5px 0"}} onClick={() => saveCard(data) } icon  color='blue' labelPosition='right'> Save <Icon  name='arrow right' /></Button>
 						</div>
 						<div style={{}} className='ui  buttons'>
-							<Button style={{"margin": "5px 0 5px 0"}} onClick={() => showCardModal() } icon active basic color='blue' primary labelPosition='right'> View <Icon  name='eye' /></Button>
+							<Button style={{"margin": "5px 0 5px 0"}} onClick={() => history.push(`/card/${data._id}`) } icon active basic color='blue' primary labelPosition='right'> View <Icon  name='eye' /></Button>
 						</div>
 					</Card.Content>
 				}
@@ -68,7 +60,7 @@ class CardView  extends Component{
 							<Button style={{"margin": "5px 0 5px 0"} } onClick={() => removeCard(data._id) } icon  basic color='red' labelPosition='right'> Remove <Icon  name='remove' /></Button>
 						</div>
 						<div style={{}} className='ui  buttons'>
-							<Button style={{"margin": "5px 0 5px 0"}} onClick={() => showCardModal() } icon active basic color='blue' primary labelPosition='right'> View <Icon  name='eye' /></Button>
+							<Button style={{"margin": "5px 0 5px 0"}} onClick={() => history.push(`/card/${data._id}`) } icon active basic color='blue' primary labelPosition='right'> View <Icon  name='eye' /></Button>
 						</div>
 					</Card.Content>
 				}
@@ -77,4 +69,4 @@ class CardView  extends Component{
 	}
 }
 
-export default subscribe(CardView, { appStore: AppContainer });
+export default subscribe(withRouter(CardView), { appStore: AppContainer });
