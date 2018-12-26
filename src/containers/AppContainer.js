@@ -10,19 +10,21 @@ class AppContainer extends Container {
       isSearchLoading: false,
       isCardLoading: false,
       search: [],
-      saved: [],
+      saved: localStorage.getItem('saved') ? JSON.parse(localStorage.getItem('saved')) : [],
       card: {},
       showCardModal: false,
     };
   }
 
   getCard = async id => {
+    this.setState({isCardLoading:true})
     try {
       const res = await axios.get(`${this.API_BASE_URL}/card/${id}`);
       this.setState({card: res.data.data});
     } catch (error) {
       throw Error('Card Not Found')
     }
+    this.setState({isCardLoading:false})
   }
   
   search = async query => {
@@ -46,25 +48,36 @@ class AppContainer extends Container {
       throw Error('Download Failed')
     }
   }
-  
+  downloadOne = async id => {
+    try {
+      const res = await axios.post(`${this.API_BASE_URL}/save`, {ids:[id]}, {responseType: 'blob'});
+      fileDownload(res.data, 'Card.docx')
+    } catch (error) {
+      throw Error('Download Failed')
+    }
+  }
   showCardModal = (show=true) => {
     this.setState({showCardModal:show})
   }
 
   saveCard = card => {
+    const newArr = [...this.state.saved, card];
 		this.setState({
-			saved: [...this.state.saved, card]
+			saved: newArr
     });
+    localStorage.setItem('saved',JSON.stringify(newArr))
   }
 
   removeCard = id => {
-    var array = []
+    var newArr = []
     if(id){
-      array = [...this.state.saved]
-      var index = array.indexOf(id)
-      array.splice(index, 1);
+      newArr = [...this.state.saved]
+      var index = newArr.indexOf(id)
+      newArr.splice(index, 1);
     }
-    this.setState({saved:array});
+    this.setState({saved:newArr});
+    localStorage.setItem('saved',JSON.stringify(newArr))
+
   }
 
 

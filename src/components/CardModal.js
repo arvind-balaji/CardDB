@@ -9,28 +9,31 @@ class CardModal extends Component {
 	}
 
 	render () {
-		const {closeModal, state} = this.props.appStore;
+		const {closeModal, downloadOne, state} = this.props.appStore;
 
 		return (
 			<Modal open>
 				<Modal.Content scrolling>
 					<Modal.Description>
-						{/* {  && 
+						{  state.isCardLoading && 
 							// <Segment>
 								<Dimmer active inverted>
 									<Loader inverted content='Loading' />
 								</Dimmer>
 							// </Segment>
-						} */}
+						}
 						<div style={{padding:'10px'}} dangerouslySetInnerHTML={{__html: state.card.fullCard}} />
 					</Modal.Description>
 				</Modal.Content>
-				<Modal.Actions>
-      		<Button primary onClick={()=>this.props.history.goBack()}>
-        			Done 
-      			</Button>
+				<Modal.Actions>     		
+					<Button primary onClick={()=>downloadOne([this.props.match.params.id])}>
+        		Download 
+      		</Button>
+					<Button  secondary onClick={()=>this.props.history.goBack()}>
+        		Done 
+      		</Button>
     			</Modal.Actions>
-  			</Modal>
+  		</Modal>
 		)
 	}
 }
