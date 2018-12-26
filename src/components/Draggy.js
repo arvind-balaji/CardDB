@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
-import CardView from './Card.js'
+import CardView from './Card'
 import InfiniteScroll from 'react-infinite-scroll-component';
 import {
 	Button,

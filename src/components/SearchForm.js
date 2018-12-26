@@ -15,6 +15,9 @@ import {
 	Header,
 	Divider
 } from 'semantic-ui-react'
+import AppContainer from '../containers/AppContainer';
+import subscribe from 'unstated-subscribe-hoc'
+
 class SearchForm extends Component {
 	constructor() {
 		super();
@@ -23,15 +26,16 @@ class SearchForm extends Component {
 			search: "",
 			field: [],
 			set: [],
-			searching: false,
 			expanded: false
 		};
 	}
+	
 	handleChange = (event, target) => {
 		this.setState({
 			[target.name]: target.value
 		});
 	}
+
 	handleSubmit = () => {
 		const { search, set, field } = this.state
 
@@ -40,9 +44,7 @@ class SearchForm extends Component {
 			s: set.join(','),
 			f: field.join(','),
 		}
-		
-		this.props.handleSearch(this.serialize(params));
-		console.log(this.serialize(params));
+		this.props.appStore.search(params)
 	}
 	serialize = function(obj) {
 		var str = [];
@@ -54,6 +56,7 @@ class SearchForm extends Component {
 	  }
 	render () {
 		const { expanded } = this.state
+		const { isSearchLoading } = this.props.appStore.state
 		const setOpt = [ 
 			{ key: 'Open Ev 2018', value: 'Open Ev 2018', text: 'OpenEv \'18' }, 
 			{ key: 'Open Ev 2017', value: 'Open Ev 2017', text: 'OpenEv \'17' }, 
@@ -75,7 +78,7 @@ class SearchForm extends Component {
 				<Form>
 					<Form.Group>
 						<Form.Field control={Input}  width={12} onChange={this.handleChange} name="search" placeholder='Search for a cite or tag...'/>
-						<Form.Field primary loading={this.props.searching} onClick={this.handleSubmit} disabled={this.props.searching} control={Button} width={4}>Search</Form.Field>
+						<Form.Field primary loading={isSearchLoading} onClick={this.handleSubmit} disabled={isSearchLoading} control={Button} width={4}>Search</Form.Field>
 					</Form.Group>
 					<Accordion  className="search-dropdown">
 						<Accordion.Title onClick={()=>(this.setState({expanded:!expanded}))} active={expanded}>
@@ -100,4 +103,4 @@ class SearchForm extends Component {
 	}
 }
 
-export default SearchForm
+export default subscribe(SearchForm, { appStore: AppContainer });

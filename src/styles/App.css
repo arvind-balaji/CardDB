@@ -1,4 +1,10 @@
-
+#react-root > .ui.container {
+    width: unset!important;
+    /* margin-left: unset!important;
+    margin-right: unset!important; */
+    margin-left: 150px!important;
+    margin-right: 150px!important;
+}
 .card-cite {
   font-size: 15px;
 }
@@ -26,6 +32,11 @@
 .tubpane-header {
   /* margin-top: -32px!important; */
 }
+
+/* .search-pane .scroll {
+  overflow-y:scroll;
+  height: 69vh;
+} */
 /* .container.app-container {
   width: inherit !important;
   margin-left: 5em !important;

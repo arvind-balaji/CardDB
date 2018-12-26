@@ -1,8 +1,8 @@
 import React, {Component} from 'react';
-import './App.css';
 import CardView from './Card'
 import SearchForm from './SearchForm'
-import axios from 'axios';
+import AppContainer from '../containers/AppContainer';
+import subscribe from 'unstated-subscribe-hoc'
 import InfiniteScroll from 'react-infinite-scroll-component';
 import {
 	Button,
@@ -27,24 +27,13 @@ class SearchPane extends Component {
 		};
 	}
 
-	handleSearch = str => {
-		this.setState({searching: true});
-		// axios.get('http://192.168.1.163/api/search?'+str)
-		axios.get('http://home.arvindbalaji.com/api/search?'+str)
-		.then(res => {
-			if('error' in res.data){
-				this.setState({searching: false});
-			}else{
-				this.setState({data: res.data.data, searching: false});
-			}
-		}).catch(err => {
-			this.setState({searching: false});
-		});
-	}
-	 saveCard = card => {
+	saveCard = card => {
 		this.props.setSaved([...this.props.saved, card]) 
-	 }
+	}
+
 	render() {
+		const {search} = this.props.appStore.state;
+		// const {handleChange, handleSearch} = this.state
 		return (
 			<div className="SearchPane">
 				<Header as='h3' dividing>Search</Header>
@@ -54,11 +43,11 @@ class SearchPane extends Component {
 					style={{overflowX:'hidden'}}
 				>
 					<div>
-					<SearchForm handleChange={this.handleChange} searching={this.state.searching} handleSearch={this.handleSearch}/>
+					<SearchForm />
 					<Card.Group style={{padding:'5px', paddingLeft:'1px'}}>
 						{
-							this.state.data.map((item, index) =>
-								<CardView id={index} data={item} saveCard={this.saveCard}/>
+							search.map((item, index) =>
+								<CardView key={item._id} data={item}/>
 							)
 						}
 					</Card.Group>
@@ -69,4 +58,5 @@ class SearchPane extends Component {
 	}
 }
 
-export default SearchPane;
+export default subscribe(SearchPane, { appStore: AppContainer });
+

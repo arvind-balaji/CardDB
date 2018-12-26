@@ -1,8 +1,9 @@
 import React, {Component} from 'react';
-import './App.css';
-import SearchPane from './SearchPane.js'
-import TubPane from './TubPane.js'
-import Draggy from './Draggy.jsx'
+import {Switch, Route, Link } from "react-router-dom";
+import './styles/App.css';
+import SearchPane from './components/SearchPane';
+import TubPane from './components/TubPane';
+import CardModal from './components/CardModal';
 
 import {
 	Container,
@@ -32,54 +33,44 @@ class App extends Component {
 		this.setState({height: window.innerHeight});
 	}
 
-	setSaved = arr => {
-		this.setState({
-			saved: arr
-		});
-	}
-
-	setData = arr => {
-		this.setState({
-			data: arr
-		})
-	}
-
 	render() {
-		return ([
-			<Container style={{marginTop: '2em'}}>
-				<Header as='h1'>
-					<span className="logo-card">
-						Debate {" "}
-					</span>
-					<span className="logo-vault">
-						Cards
-					</span>
-					
-				</Header> 
-				<br/>
-				<Grid columns={2} >
-					<Grid.Column>
-						<SearchPane 
-							height={this.state.height+30} 
-							setSaved={this.setSaved} 
-							saved={this.state.saved}
-						/>
-					</Grid.Column>
-					<Grid.Column>
-						<TubPane 
-							height={this.state.height-15} 
-							setSaved={this.setSaved} 
-							saved={this.state.saved}
-						/>
-					</Grid.Column>
-				</Grid>
-			</Container>,
-			<Button href="https://github.com/arvind-balaji/debate-cards" style={{position:'absolute',top:'10px',right:'10px'}} color='black'>
-			 <Icon name='github' /> 
-			 Source
-			</Button>,
-			<div style={{position: 'absolute', bottom: '10px', textAlign: 'center',width: '100%', color:'#525252'}}> The Card Database | Arvind Balaji | 2018 </div>
-		]);
+		return (
+			<div>
+				<Route path="/card/:id" component={CardModal} />
+				<Container style={{marginTop: '2em'}}>
+					<Header as='h1'>
+						<span className="logo-card">
+							Debate {" "}
+						</span>
+						<span className="logo-vault">
+							Cards
+						</span>
+					</Header> 
+					<br/>
+					<Grid columns={2} >
+						<Grid.Column>
+							<SearchPane 
+								height={this.state.height+30} 
+								setSaved={this.setSaved} 
+								saved={this.state.saved}
+							/>
+						</Grid.Column>
+						<Grid.Column>
+							<TubPane 
+								height={this.state.height-15} 
+								setSaved={this.setSaved} 
+								saved={this.state.saved}
+							/>
+						</Grid.Column>
+					</Grid>
+				</Container>,
+				<Button href="https://github.com/arvind-balaji/debate-cards" style={{position:'absolute',top:'10px',right:'10px'}} color='black'>
+				<Icon name='github' /> 
+				Source
+				</Button>,
+				<div style={{position: 'absolute', bottom: '10px', textAlign: 'center',width: '100%', color:'#525252'}}> The Card Database | Arvind Balaji | 2018 </div>
+			</div>
+		);
 	}
 }
 
