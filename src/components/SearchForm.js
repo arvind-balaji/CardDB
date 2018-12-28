@@ -2,20 +2,11 @@ import React, { Component } from 'react'
 import {
 	Button,
 	Form,
-	Dropdown,
 	Input,
 	Accordion,
 	Icon,
-	Label,
-	Checkbox,
-	Grid,
-	Radio,
-	Select,
-	Card,
-	Header,
-	Divider
 } from 'semantic-ui-react'
-import queryString  from 'query-string';
+import * as queryString from 'query-string';
 import { withRouter } from "react-router";
 
 import AppContainer from '../containers/AppContainer';
@@ -37,13 +28,7 @@ class SearchForm extends Component {
 		const search = this.props.history.location.search
 		if(search){
 			const query = queryString.parse(search)
-			console.log(query)
-			this.props.appStore.search(query);
-			console.log({
-				search:query.q,
-				field:query.f ? query.f.split(",") : [],
-				set:query.s ? query.s.split(",")  : []
-			})
+			this.props.appStore.search(query).catch(err=>(err));
 			this.setState({
 				search:query.q,
 				field:query.f ? query.f.split(",") : [],
@@ -66,12 +51,13 @@ class SearchForm extends Component {
 			s: set.join(','),
 			f: field.join(','),
 		}
+		// eslint-disable-next-line
 		const qs = queryString.stringify(params,{sort:false}).replace(/\%20/g, '+')
 		this.props.history.push({
 			pathname: '/search',
 			search: `?${qs}`
 		})
-		this.props.appStore.search(params)
+		this.props.appStore.search(params).catch(err=>(err))
 	}
 	serialize = function(obj) {
 		var str = [];

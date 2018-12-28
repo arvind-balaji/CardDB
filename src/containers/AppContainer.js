@@ -5,7 +5,8 @@ import fileDownload from 'react-file-download'
 class AppContainer extends Container {
   constructor() {
     super();
-    this.API_BASE_URL = 'http://192.168.1.163:8080/api'
+    this.API_BASE_URL = 'http://api.debate.cards/v1'
+    // this.API_BASE_URL = 'http://localhost:8080/v1'
     this.state = {
       isSearchLoading: false,
       isCardLoading: false,
@@ -23,20 +24,21 @@ class AppContainer extends Container {
       this.setState({card: res.data.data});
     } catch (error) {
       throw Error('Card Not Found')
+    } finally {
+      this.setState({isCardLoading:false})
     }
-    this.setState({isCardLoading:false})
   }
-  
+
   search = async query => {
     this.setState({isSearchLoading: true});
     try {
       const res = await axios.get(`${this.API_BASE_URL}/search`, {params: query})
-      if ('error' in res.data) { throw Error('Bad Request') }; //tmp work around - server should send 4xx status on bad querey
       this.setState({search: res.data.data});
     } catch (error) {
       throw Error('Search Failed')
+    } finally {
+      this.setState({isSearchLoading:false});
     }
-    this.setState({isSearchLoading:false});
   }
   
   download = async () => {
@@ -77,9 +79,15 @@ class AppContainer extends Container {
     }
     this.setState({saved:newArr});
     localStorage.setItem('saved',JSON.stringify(newArr))
-
   }
 
+  reorder = (list=this.state.saved, startIndex, endIndex) => {
+    const result = Array.from(list);
+    const [removed] = result.splice(startIndex, 1);
+    result.splice(endIndex, 0, removed);
+    console.log(result)
+    return result;
+  };
 
 }
 

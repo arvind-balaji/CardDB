@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import { Button, Header, Image, Modal, Loader, Dimmer, Segment } from 'semantic-ui-react'
+import { Button,  Modal, Loader, Dimmer } from 'semantic-ui-react'
 import AppContainer from '../containers/AppContainer';
 import subscribe from 'unstated-subscribe-hoc'
 class CardModal extends Component {
@@ -8,8 +8,16 @@ class CardModal extends Component {
 		getCard(this.props.match.params.id);
 	}
 
+	goBack = () => {
+		const {history} = this.props
+		if(history.length<=1){
+			history.push('/')
+		}else{
+			history.goBack()
+		}
+	}
 	render () {
-		const {closeModal, downloadOne, state} = this.props.appStore;
+		const {downloadOne, state} = this.props.appStore;
 
 		return (
 			<Modal open>
@@ -26,10 +34,10 @@ class CardModal extends Component {
 					</Modal.Description>
 				</Modal.Content>
 				<Modal.Actions>     		
-					<Button primary onClick={()=>downloadOne([this.props.match.params.id])}>
+					<Button primary onClick={()=>downloadOne(this.props.match.params.id)}>
         		Download 
       		</Button>
-					<Button  secondary onClick={()=>this.props.history.goBack()}>
+					<Button  secondary onClick={()=>this.goBack()}>
         		Done 
       		</Button>
     			</Modal.Actions>

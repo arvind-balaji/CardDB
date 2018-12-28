@@ -5,23 +5,9 @@ import AppContainer from '../containers/AppContainer';
 import subscribe from 'unstated-subscribe-hoc'
 import InfiniteScroll from 'react-infinite-scroll-component';
 import { Route } from "react-router-dom";
-import {
-	Button,
-	Checkbox,
-	Form,
-	Grid,
-	Input,
-	Radio,
-	Select,
-	Card,
-	Header,
-	Divider
-} from 'semantic-ui-react'
+import { Card, Header, } from 'semantic-ui-react'
 
 class SearchPane extends Component {
-	// constructor() {
-	// 	super();
-	// }
 
 	saveCard = card => {
 		this.props.setSaved([...this.props.saved, card]) 
@@ -39,7 +25,6 @@ class SearchPane extends Component {
 	
 	render() {
 		const {search} = this.props.appStore.state;
-		// const {handleChange, handleSearch} = this.state
 		return (
 			<div className="SearchPane">
 				<Header as='h3' dividing>Search</Header>
@@ -49,7 +34,7 @@ class SearchPane extends Component {
 					style={{overflowX:'hidden'}}
 				>
 					<div>
-					<SearchForm />
+						<SearchForm />
           	<Route path="/search" component={() => this.searchResults(search)} />
 					</div>
 				</InfiniteScroll>	

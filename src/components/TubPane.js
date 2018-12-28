@@ -1,16 +1,13 @@
 import React, {Component} from 'react';
 import CardView from './Card'
-import axios from 'axios';
 import InfiniteScroll from 'react-infinite-scroll-component';
-import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
-import fileDownload from 'react-file-download'
+
 import {
 	Button,
 	Form,
 	Card,
 	Header,
 	Divider,
-	Input
 } from 'semantic-ui-react'
 import AppContainer from '../containers/AppContainer';
 import subscribe from 'unstated-subscribe-hoc'
